@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "motto001/laravel_dev",
+    "description": "laravel fejlesztés.",
+    "keywords": ["motto001", "laravel"],
     "license": "MIT",
     "type": "project",
     "require": {
