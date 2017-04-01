@@ -19,7 +19,7 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-	<script src='https://www.google.com/recaptcha/api.js'></script> <!-- google re captcha -->
+	<!--<script src='https://www.google.com/recaptcha/api.js'></script>  google re captcha -->
 </head>
 <body>
     <div id="app">
