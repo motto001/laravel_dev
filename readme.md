@@ -1,8 +1,8 @@
-<p align="center">Telepítés</p>
-
-be kell lépni a telepítendő mappába majd:</br>
-
-
+<p align="center">Telepítés clonozassal (vs code).</p>
+ Fejlesztésnél érdemes ezt használni, mert ha composerrel telepítünk nem lehet összehangolni a repositorikat.(nem tudjuk push-olni csak egy másik repositoriba.) Telepítési mappának egy szintel fentebbi mappát kell megadni, mert létrehoz benne egy repositori nevével megegyező mappát. figyelni kell hogy ne legyen már készen.
+utána belépni a project könyvtárba :
+composer update
+<p align="center">Telepítés composerrel.</p>
 egyes verzio:</br>
 composer create-project motto001/laravel_dev:1.0.0 project_nev</br>
 nem kell léterhozni a project mappáját! a composer létrehozza a project nevével megegyezően (project_nev) abban a mappában amiben kiadjuk a parancsot.</br>
