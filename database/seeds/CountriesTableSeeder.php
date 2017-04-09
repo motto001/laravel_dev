@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Database\Seeder;
-use App\Permission;
+
 
 class CountriesTableSeeder extends Seeder
 {

@@ -6,188 +6,90 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-      <link href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />   
-    <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
-    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
-    <link href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect.
-    -->
-    <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript">
-var map = null;
-  var my_boundaries = {};
-  var data_layer;
-  var info_window;
 
-  //initialize map on document ready
-  $(document).ready(function(){
-     var bsWidth = $("#mo-info").innerWidth();
-    // $("#map_canvas").css("width" ,bsWidth );  
-  	var latlng = new google.maps.LatLng(47.45780853075031, 12.422103881835938); //you can use any location as center on map startup
-  	var myOptions = {
-  		zoom: 4,
-  		center: latlng,
-  		mapTypeControl: true,
-  		mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
-  		navigationControl: true,
-  		mapTypeId: google.maps.MapTypeId.ROADMAP
-  	};
-  	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-  	google.maps.event.addListener(map, 'click', function(){
-  		if(info_window){
-  			info_window.setMap(null);
-  			info_window = null;
-  		}
-   
-  	});
-google.maps.event.addDomListener(window, "resize", function() {
- var center = map.getCenter();
- google.maps.event.trigger(map, "resize");
- map.setCenter(center); 
-});
+        <!-- Styles -->
+        <style>
+            html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 100;
+                height: 100vh;
+                margin: 0;
+            }
 
+            .full-height {
+                height: 100vh;
+            }
 
-	
-	$('#boundary_load_select').change(function(){
-		if($(this).val()==1){
-			loadBoundariesFromGeoJson("https://raw.githubusercontent.com/matej-pavla/Google-Maps-Examples/master/BoundariesExample/geojsons/world.countries.geo.json");
-		}else{
-			loadBoundariesFromGeoJson("https://raw.githubusercontent.com/matej-pavla/Google-Maps-Examples/master/BoundariesExample/geojsons/us.states.geo.json");
-		}
-	});
-	loadBoundariesFromGeoJson("https://raw.githubusercontent.com/matej-pavla/Google-Maps-Examples/master/BoundariesExample/geojsons/world.countries.geo.json");
-  });
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
 
-  function initializeDataLayer(){
-	if(data_layer){
-		data_layer.forEach(function(feature) {
-		    data_layer.remove(feature);
-		});
-		data_layer = null;
-	}
-	data_layer = new google.maps.Data({map: map}); //initialize data layer which contains the boundaries. It's possible to have multiple data layers on one map
-  	data_layer.setStyle({ //using set style we can set styles for all boundaries at once
-  		fillColor: 'white',
-  		strokeWeight: 1,
-  		fillOpacity: 0.1
-  	});
+            .position-ref {
+                position: relative;
+            }
 
+            .top-right {
+                position: absolute;
+                right: 10px;
+                top: 18px;
+            }
 
-  	data_layer.addListener('click', function(e) { //we can listen for a boundary click and identify boundary based on e.feature.getProperty('boundary_id'); we set when adding boundary to data layer
-  		var boundary_id = e.feature.getProperty('boundary_id');
-  		var boundary_name = "NOT SET";
-  		if(boundary_id && my_boundaries[boundary_id] && my_boundaries[boundary_id].name) boundary_name = my_boundaries[boundary_id].name;
-  	/*	if(info_window){
-  			info_window.setMap(null);
-  			info_window = null;
-  		}
-  		info_window = new google.maps.InfoWindow({
-  			content: '<div>You have clicked a boundary: <span style="color:red;">' + boundary_name + '</span></div>',
-  			size: new google.maps.Size(150,50),
-  			position: e.latLng, map: map
-  		});*/
-    map.setCenter(e.latLng);
-    map.setZoom(7);
+            .content {
+                text-align: center;
+            }
 
-$('#mo-info').html('position:' +e.latLng+', a választott ország: '+ boundary_name+' id:'+boundary_id);
+            .title {
+                font-size: 84px;
+            }
 
-  	});
-	
-	data_layer.addListener('mouseover', function(e) {
-		data_layer.overrideStyle(e.feature, {
-			strokeWeight: 3,
-			strokeColor: '#ff0000'
-		});
-	});
-	
-	data_layer.addListener('mouseout', function(e) {
-		data_layer.overrideStyle(e.feature, {
-			strokeWeight: 1,
-			strokeColor: ''
-		});
-	});
-  }
+            .links > a {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
 
-  function loadBoundariesFromGeoJson(geo_json_url){
-	initializeDataLayer();
-  	$.getJSON(geo_json_url, function(data){
-  		if(data.type == "FeatureCollection"){ //we have a collection of boundaries in geojson format
-  			if(data.features){
- var iso2_3={"AND":"AD", "ARE":"AE", "AFG":"AF", "ATG":"AG", "AIA":"AI", "ALB":"AL", "ARM":"AM", "ANT":"AN", "AGO":"AO", "ATA":"AQ", "ARG":"AR", "ASM":"AS", "AUT":"AT", "AUS":"AU", "ABW":"AW", "ALA":"AX", "ALA":"AX", "AZE":"AZ", "BIH":"BA", "BIH":"BA", "BRB":"BB", "BGD":"BD", "BEL":"BE", "BFA":"BF", "BGR":"BG", "BHR":"BH", "BDI":"BI", "BEN":"BJ", "BLM":"BL", "BMU":"BM", "BRN":"BN", "BRN":"BN", "BOL":"BO", "BRA":"BR", "BHS":"BS", "BTN":"BT", "BVT":"BV", "BWA":"BW", "BLR":"BY", "BLZ":"BZ", "CAN":"CA", "CCK":"CC", "CCK":"CC", "COD":"CD", "COD":"CD", "CAF":"CF", "CAF":"CF", "COG":"CG", "CHE":"CH", "CIV":"CI", "CIV":"CI", "COK":"CK", "CHL":"CL", "CMR":"CM", "CHN":"CN", "COL":"CO", "CRI":"CR", "CUB":"CU", "CPV":"CV", "CXR":"CX", "CYP":"CY", "CZE":"CZ", "CZE":"CZ", "DEU":"DE", "DJI":"DJ", "DNK":"DK", "DMA":"DM", "DOM":"DO", "DOM":"DO", "DZA":"DZ", "ECU":"EC", "EST":"EE", "EGY":"EG", "ESH":"EH", "ESH":"EH", "ERI":"ER", "ESP":"ES", "ETH":"ET", "FIN":"FI", "FJI":"FJ", "FLK":"FK", "FLK":"FK", "FLK":"FK", "FLK":"FK", "FSM":"FM", "FRO":"FO", "FRA":"FR", "GAB":"GA", "GBR":"GB", "GRD":"GD", "GEO":"GE", "GUF":"GF", "GGY":"GG", "GHA":"GH", "GIB":"GI", "GRL":"GL", "GMB":"GM", "GIN":"GN", "GLP":"GP", "GNQ":"GQ", "GNQ":"GQ", "GRC":"GR", "SGS":"GS", "GTM":"GT", "GUM":"GU", "GNB":"GW", "GUY":"GY", "HKG":"HK", "HMD":"HM", "HND":"HN", "HRV":"HR", "HTI":"HT", "HUN":"HU", "IDN":"ID", "IRL":"IE", "ISR":"IL", "IMN":"IM", "IND":"IN", "IOT":"IO", "IRQ":"IQ", "IRN":"IR", "IRN":"IR", "ISL":"IS", "ITA":"IT", "JEY":"JE", "JAM":"JM", "JOR":"JO", "JPN":"JP", "KEN":"KE", "KGZ":"KG", "KHM":"KH", "KIR":"KI", "COM":"KM", "KNA":"KN", "PRK":"KP", "PRK":"KP", "KOR":"KR", "KOR":"KR", "KWT":"KW", "CYM":"KY", "KAZ":"KZ", "LAO":"LA", "LAO":"LA", "LBN":"LB", "LCA":"LC", "LIE":"LI", "LKA":"LK", "LBR":"LR", "LSO":"LS", "LTU":"LT", "LUX":"LU", "LVA":"LV", "LBY":"LY", "LBY":"LY", "MAR":"MA", "MCO":"MC", "MDA":"MD", "MDA":"MD", "MNE":"ME", "MAF":"MF", "MDG":"MG", "MHL":"MH", "MKD":"MK", "MKD":"MK", "MLI":"ML", "MMR":"MM", "MMR":"MM", "MNG":"MN", "MAC":"MO", "MNP":"MP", "MTQ":"MQ", "MRT":"MR", "MSR":"MS", "MLT":"MT", "MUS":"MU", "MDV":"MV", "MWI":"MW", "MEX":"MX", "MYS":"MY", "MOZ":"MZ", "NAM":"NA", "NCL":"NC", "NER":"NE", "NFK":"NF", "NGA":"NG", "NIC":"NI", "NLD":"NL", "NOR":"NO", "NPL":"NP", "NRU":"NR", "NIU":"NU", "NZL":"NZ", "OMN":"OM", "PAN":"PA", "PER":"PE", "PYF":"PF", "PNG":"PG", "PHL":"PH", "PAK":"PK", "POL":"PL", "SPM":"PM", "PCN":"PN", "PRI":"PR", "PSE":"PS", "PRT":"PT", "PLW":"PW", "PRY":"PY", "QAT":"QA", "REU":"RE", "ROU":"RO", "SRB":"RS", "RUS":"RU", "RWA":"RW", "SAU":"SA", "SLB":"SB", "SLB":"SB", "SYC":"SC", "SDN":"SD", "SWE":"SE", "SGP":"SG", "SHN":"SH", "SVN":"SI", "SJM":"SJ", "SVK":"SK", "SLE":"SL", "SMR":"SM", "SEN":"SN", "SOM":"SO", "SOM":"SO", "SUR":"SR", "SSD":"SS", "SSD":"SS", "STP":"ST", "SLV":"SV", "SYR":"SY", "SYR":"SY", "SWZ":"SZ", "TCA":"TC", "TCD":"TD", "ATF":"TF", "ATF":"TF", "TGO":"TG", "THA":"TH", "TJK":"TJ", "TKL":"TK", "TLS":"TL", "TKM":"TM", "TUN":"TN", "TON":"TO", "TUR":"TR", "TTO":"TT", "TUV":"TV", "TWN":"TW", "TZA":"TZ", "TZA":"TZ", "UKR":"UA", "UGA":"UG", "UMI":"UM", "USA":"US", "USA":"US", "URY":"UY", "UZB":"UZ", "VAT":"VA", "VAT":"VA", "VCT":"VC", "VEN":"VE", "VGB":"VG", "VIR":"VI", "VNM":"VN", "VNM":"VN", "VUT":"VU", "WLF":"WF", "WSM":"WS", "XAA":"XA", "YEM":"YE", "MYT":"YT", "ZAF":"ZA", "ZMB":"ZM", "ZWE":"ZW"};
- var iso2='';
-  				for(var i = 0; i < data.features.length; i++){
-					var boundary_id = i + 1;
-  					var new_boundary = {};
-  					if(!data.features[i].properties) data.features[i].properties = {}; 
-					data.features[i].properties.boundary_id = boundary_id; //we will use this id to identify boundary later when clicking on it
-  					data_layer.addGeoJson(data.features[i], {idPropertyName: 'boundary_id'});
-					new_boundary.feature = data_layer.getFeatureById(boundary_id);
-  					if(data.features[i].properties.name) new_boundary.name = data.features[i].properties.name;
-					if(data.features[i].properties.NAME) new_boundary.name = data.features[i].properties.NAME;
-  					my_boundaries[boundary_id] = new_boundary;
-if(data.features[i].id!=-99 && data.features[i].id!= "CS-KM"){
-	eval('iso=iso2_3.'+data.features[i].id+';');
-//iso='00';
-}					  
-else{iso='00';}
+            .m-b-md {
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="flex-center position-ref full-height">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @if (Auth::check())
+                        <a href="{{ url('/home') }}">Home</a>
+                    @else
+                        <a href="{{ url('/login') }}">Login</a>
+                        <a href="{{ url('/register') }}">Register</a>
+                    @endif
+                </div>
+            @endif
 
+            <div class="content">
+                <div class="title m-b-md">
+                    Laravel
+                </div>
 
-
-			 $('#mo-info').html($('#mo-info').html()+
-			 
-			"['id'=>'"+ boundary_id+"','iso2'=>'"+iso+"','iso3'=>'"+data.features[i].id+
-			"','name'=>'"+new_boundary.name+"'],</br>");		
-
-  				}
-  			}
-			if(my_boundaries[24]){ //just an example, that you can change styles of individual boundary
-				data_layer.overrideStyle(my_boundaries[24].feature, {
-					fillColor: '#0000FF',
-					fillOpacity: 0.9
-				});
-			}
-  		}
-  	});
-  }
-
-
-
-google.load("maps", "3",{other_params:"sensor=false"});
-</script>
-</head>
-<body >
-    <!-- Header -->
-      @include('header')
-
-   
-
-<div class="col-md-8 col-md-offset-2">
-	<h1>Üdv! kattints az országra ahol vezetőt keresel!</h1>
-</div>
-<div >
-	<div id="map_canvas" style="height:400px; " class="col-md-8 col-md-offset-2"></div>
-</div>
-
-
-<div id="mo-info" class="col-md-8 col-md-offset-2" style=" border-style: solid;
-    border-width: 1px;min-height:500px;">
-</div> 
-
-   <!-- jQuery 2.1.3 -->
-    <script src="{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jQuery-2.2.3.min.js") }}"></script>
-    <!-- Bootstrap 3.3.2 JS -->
-    <script src="{{ asset ("/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}" type="text/javascript"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
-   
-</body>
+                <div class="links">
+                    <a href="https://laravel.com/docs">Documentation</a>
+                    <a href="https://laracasts.com">Laracasts</a>
+                    <a href="https://laravel-news.com">News</a>
+                    <a href="https://forge.laravel.com">Forge</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
