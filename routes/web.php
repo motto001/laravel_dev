@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes(); //lehet hogy kell-------------------------------------------
 
 Route::get('/home', 'HomeController@index');
 //Route::get('/admin', 'AdminController@index');
@@ -24,12 +24,33 @@ Route::get('/home', 'HomeController@index');
 });*/
 
 Route::get('test', 'TestController@index');
+//Route::get('proba', 'proba\proba@valami');
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::auth();
+//Route::resource('proba','proba\proba' );
+//Route::group(['middleware' => ['auth']], function() {
+//Route::resource('proba','proba\proba' );});
+Route::group(['prefix' => 'profil','middleware' => 'App\Http\Middleware\userjog'], function() {
+Route::resource('proba2','proba\ProbaController' );
+Route::resource('/','proba\ProbaController' );
+}
+);
+
+
+/*
+Route::group(['prefix' => 'admin', 'middleware' => 'userjog'], function() {
+
+ Route::resource('proba','proba\proba' );
+
+});
+
+*/
+
 
 Route::group(['middleware' => ['auth']], function() {
 

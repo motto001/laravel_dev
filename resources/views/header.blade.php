@@ -1,5 +1,5 @@
 <!-- Main Header -->
-<header class="main-header">
+<header class="main-header" style="background-color:blue;">
 
   <!-- Logo -->
   <a href="index2.html" class="logo"><b>Admin</b>LTE</a>
