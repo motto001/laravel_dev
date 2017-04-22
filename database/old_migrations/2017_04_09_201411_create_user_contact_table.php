@@ -13,13 +13,16 @@ class CreateUserContactTable extends Migration
      */
     public function up()
     {
-            Schema::create('user_contact', function (Blueprint $table) {
+            Schema::create('usercontact', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user__id');
+            $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->string('val');
-            $table->string('memo');
-            
+            $table->string('memo')->nullable();
+            	$table->foreign('user_id')->references('id')->on('userss')
+			->onUpdate('cascade')->onDelete('cascade');
+			
+			//$table->primary(['user_id']);
         });
     }
 
@@ -30,6 +33,6 @@ class CreateUserContactTable extends Migration
      */
     public function down()
     {
-       Schema::dropIfExists('user_contact');
+       Schema::dropIfExists('usercontact');
     }
   }

@@ -38,6 +38,7 @@ Route::auth();
 Route::group(['prefix' => 'profil','middleware' => 'App\Http\Middleware\userjog'], function() {
 Route::resource('proba2','proba\ProbaController' );
 Route::resource('/','proba\ProbaController' );
+Route::resource('frien','proba\FriendController' );
 }
 );
 

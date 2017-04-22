@@ -11,21 +11,26 @@ use Illuminate\Support\Facades\Auth;
 class ProbaController extends Controller
 {
 	public function index()
-	    {
+		    {
 		return 'proba index function';
 	}
 	public function create()
-	{
+		{
 		
 		return 'proba create function';
 	}
 	public function show($photoId)
-	     {
+		     {
+		echo 'fotoid:'.$photoId;
+		
+	}
+	public function create_user($countryId)
+	 {
 		echo 'fotoid:'.$photoId;
 		
 	}
 	public function valami()
-	    {
+		    {
 		$g=Config::get('proba.proba.t1');
 		// 		return 'hhhh'.$g;
 		// 		print_r(Auth::user());
