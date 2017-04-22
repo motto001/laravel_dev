@@ -27,7 +27,7 @@ class MoSetupTables extends Migration
             $table->string('iso3')->nullable();
             $table->string('iso2');
             $table->string('name');
-           $table->string('icon')->nullable();
+           $table->string('flag')->nullable();
         });
  Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
