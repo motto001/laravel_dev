@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))
+        return view('crud::users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -30,8 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::lists('display_name','id');
-        return view('users.create',compact('roles'));
+        $roles =Role::pluck('display_name','id');
+        return view('crud::users.create',compact('roles'));
     }
 
     /**
@@ -70,7 +70,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        return view('crud::users.show',compact('user'));
     }
 
     /**
@@ -85,7 +85,7 @@ class UserController extends Controller
         $roles = Role::pluck('display_name','id');
         $userRole = $user->roles->pluck('id','id')->toArray();
 
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('crud::users.edit',compact('user','roles','userRole'));
     }
 
     /**

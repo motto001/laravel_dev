@@ -15,7 +15,7 @@ class ItemCRUD2Controller extends Controller
     public function index(Request $request)
     {
         $items = Item::orderBy('id','DESC')->paginate(5);
-        return view('ItemCRUD2.index',compact('items'))
+        return view('tmpl::crud.ItemCRUD2.index',compact('items'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -26,7 +26,7 @@ class ItemCRUD2Controller extends Controller
      */
     public function create()
     {
-        return view('ItemCRUD2.create');
+        return view('crud::ItemCRUD2.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class ItemCRUD2Controller extends Controller
     public function show($id)
     {
         $item = Item::find($id);
-        return view('ItemCRUD2.show',compact('item'));
+        return view('crud::ItemCRUD2.show',compact('item'));
     }
 
     /**
@@ -69,7 +69,7 @@ class ItemCRUD2Controller extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
-        return view('ItemCRUD2.edit',compact('item'));
+        return view('crud::ItemCRUD2.edit',compact('item'));
     }
 
     /**

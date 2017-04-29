@@ -1,0 +1,33 @@
+gyorsító tár ürítés:
+
+php artisan cache:clear (van view, app stb mód is)
+
+ha nem talál valami osztályt pedig ott van (általában névtér nélkülieknél fordul elő,pl UsersTableSeeder.php)
+
+composer dump-autoload
+
+migációnál $table->integer('pub',4)->default(0); nem működik default érték value error hibát jelez
+jó: $table->integer('pub')->default(0);
+
+vs code hogy a blade.php htmlként nyissa meg:"files.associations": { "*.blade.php": "html" }
+
+---------------------------------------------
+névtér hozzáadása a viewhez:
+
+config/view.php:
+'tmpl' => [
+        realpath(base_path('resources/views/base')),
+    ],
+
+
+App\Providers\AppServiceProvider.php:
+
+
+public function boot()
+    {$this->app['view']->addNamespace('tmpl', config('view.tmpl'));}
+
+meghívás bladeben:@extends('tmpl::layouts.app');
+-----------------------------------------------------------
+
+Call to undefined method Illuminate\Database\Query\Builder::list();
+5.2 felett a list() helyett pluck() van;

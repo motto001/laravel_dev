@@ -57,5 +57,44 @@ class PermissionTableSeeder extends Seeder
         foreach ($permission as $key => $value) {
         	Permission::create($value);
         }
+
+$permission_role = array(
+  array('permission_id' => '1','role_id' => '1'),
+  array('permission_id' => '1','role_id' => '2'),
+  array('permission_id' => '2','role_id' => '1'),
+  array('permission_id' => '2','role_id' => '2'),
+  array('permission_id' => '3','role_id' => '1'),
+  array('permission_id' => '4','role_id' => '1'),
+  array('permission_id' => '4','role_id' => '2'),
+  array('permission_id' => '5','role_id' => '2'),
+  array('permission_id' => '6','role_id' => '1'),
+  array('permission_id' => '7','role_id' => '1')
+);
+
+	foreach($permission_role as $dataS){
+			//$lang_assoc=["iso3"=>$lang[0],"iso2"=>$lang[1],"name"=>$lang[2],"flag"=>$lang[3]];
+			DB::table('permission_role')->insert( $dataS);
+		}
+
+$role_user = array(
+  array('user_id' => '1','role_id' => '1'),
+  array('user_id' => '2','role_id' => '2')
+);
+
+	foreach($role_user as $dataS){
+			//$lang_assoc=["iso3"=>$lang[0],"iso2"=>$lang[1],"name"=>$lang[2],"flag"=>$lang[3]];
+			DB::table('role_user')->insert( $dataS);
+		}
+
+$roles = array(
+  array('id' => '1','name' => 'admin','display_name' => NULL,'description' => NULL,'created_at' => NULL,'updated_at' => NULL),
+  array('id' => '2','name' => 'user admin','display_name' => 'useradmin','description' => 'jhdj','created_at' => '2017-04-02 18:42:53','updated_at' => '2017-04-02 18:42:53')
+);
+
+foreach($roles as $dataS){
+			//$lang_assoc=["iso3"=>$lang[0],"iso2"=>$lang[1],"name"=>$lang[2],"flag"=>$lang[3]];
+			DB::table('roles')->insert( $dataS);
+		}
+
     }
 }

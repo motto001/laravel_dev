@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+          $this->app['view']->addNamespace('tmpl', config('view.tmpl'));
+          $this->app['view']->addNamespace('crud', config('view.crud'));
+          // $this->app['view']->prependNamespace('tmpl', __DIR__.'/../resources/views/base');
     }
 
     /**

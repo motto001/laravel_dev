@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('tmpl::dashboard')
  
 @section('content')
 	<div class="row">
@@ -24,7 +24,7 @@
 			<th>No</th>
 			<th>Title</th>
 			<th>Description</th>
-			<th width="280px">Action</th>
+			<th width="220px">Action</th>
 		</tr>
 	@foreach ($items as $key => $item)
 	<tr>

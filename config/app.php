@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 Zizaco\Entrust\EntrustServiceProvider::class,
 'Collective\Html\HtmlServiceProvider',
+'Jasekz\Laradrop\LaradropServiceProvider',
         /*
          * Package Service Providers...
          */

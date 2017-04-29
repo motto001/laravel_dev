@@ -16,6 +16,8 @@ class MofriendSetupTables extends Migration
 		Schema::create('friends', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
+			$table->string('foto');
+			$table->integer('pub');
 			$table->timestamps();
 			
 			$table->foreign('user_id')->references('id')->on('users')
@@ -29,7 +31,7 @@ class MofriendSetupTables extends Migration
 		Schema::create('friendslng', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('friend_id')->unsigned();
-			$table->integer('languages_id')->unsigned();
+			$table->string('lang')->default('hu');
 			$table->string('name');
 			$table->string('cim')->nullable();
 			$table->string('intro')->nullable();
@@ -37,8 +39,8 @@ class MofriendSetupTables extends Migration
 			
 			$table->foreign('friend_id')->references('id')->on('friends')
 			->onUpdate('cascade')->onDelete('cascade');
-			$table->foreign('languages_id')->references('id')->on('languages')
-			 ->onUpdate('cascade')->onDelete('cascade');
+		/*	$table->foreign('languages_id')->references('id')->on('languages')
+			 ->onUpdate('cascade')->onDelete('cascade');*/
 			
 			//$table->primary(['friend_id','languages_id']);
 			

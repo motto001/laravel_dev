@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tmpl:layouts.app')
  
 @section('content')
 	<div class="row">

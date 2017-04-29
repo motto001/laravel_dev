@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
 		    public function run()
 		    {
 		$usrT= [
-				['motto','mott001@gmail.com','$2y$10$daMWibOePQug61k6jvCcZOCQr2tPNejKd3u2rWjxtL5w8bRYGLSsu']
+				['motto','motto001@gmail.com','$2y$10$daMWibOePQug61k6jvCcZOCQr2tPNejKd3u2rWjxtL5w8bRYGLSsu']
 				,['menku','menkuottovgmail.com','$2y$10$daMWibOePQug61k6jvCcZOCQr2tPNejKd3u2rWjxtL5w8bRYGLSsu']
 				];
 		foreach($usrT as $usr){

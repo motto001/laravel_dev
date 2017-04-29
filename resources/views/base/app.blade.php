@@ -6,30 +6,44 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-      <link href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />   
+ <!--CSS   ******************************************** -->
+    <link href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />   
     <!-- Font Awesome Icons -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect.
-
-	<script type="text/javascript" src="js/momap.js"></script>	  
-    -->
     <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+ 	<!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+ 
+ 
+ <!--JS  ******************************************** -->	
+	
+	
+	<!-- <script type="text/javascript" src="js/momap.js"></script>	  -->
+ 
+        
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
+
+<!--  scriptek css-ek feltöltése -->	
+ @stack('js_file')
+ @stack('css_file')
+
 <script type="text/javascript">
   var map = null;
   var my_boundaries = {};
   var data_layer;
   var info_window;
 
+//  @stack('css_file')
   //initialize map on document ready
   $(document).ready(function(){
      //var bsWidth = $("#mo-info").innerWidth();
@@ -99,11 +113,50 @@ google.maps.event.addDomListener(window, "resize", function() {
   		});*/
     map.setCenter(e.latLng);
     map.setZoom(7);
-
-$('#mo-info').html('position:' +e.latLng+', a választott ország: '+ boundary_name+' id:'+boundary_id);
+var a=("" +e.latLng).replace('(',''); //átalakítja stringé különben nem működik a replace
+a=a.replace(')','');
+$('#mo-info').html('position:' +a+', a választott ország: '+ boundary_name+' id:'+boundary_id);
+//friend_create(boundary_id);
+friend_list(boundary_id);
+getClickedData(a) ;
 
   	});
-	
+function friend_create(boundary_id) {	
+$.ajax({
+  url: "authfriend/"+boundary_id,
+  context: document.body
+});
+}
+function getClickedData(latLng) {
+	//var u	="http://maps.googleapis.com/maps/api/geocode/json?latlng="+latLng+"&sensor=true";
+$.ajax({
+  url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latLng+"&sensor=true",
+  dataType: 'json'
+}).done(function( data ) {
+   // $('#mo-info').html(data);
+      
+            $('#mo-info').append(data.results[0].address_components[0].long_name+data.results[0].formatted_address);
+			//$('#mo-info').append("jsdfklajlfj");
+  });
+
+}
+
+
+
+function friend_list(boundary_id) {	
+$.ajax({
+  url: "listfriend/"+boundary_id,
+  dataType: 'json'
+}).done(function( data ) {
+   // $('#mo-info').html(data);
+      $.each(data, function(index, element) {
+            $('#mo-info').append($('<div>', {
+                text: element.name
+            }));
+        });
+  });
+
+}
 	data_layer.addListener('mouseover', function(e) {
 		data_layer.overrideStyle(e.feature, {
 			strokeWeight: 3,
@@ -160,9 +213,10 @@ $('#mo-info').html('position:' +e.latLng+', a választott ország: '+ boundary_n
 google.load("maps", "3",{other_params:"sensor=false"});
 </script>
 </head>
-<body >
+<body class="skin-blue">
+
     <!-- Header -->
- @include('base.header')
+ @include('tmpl::part.appheader')
 
    
 

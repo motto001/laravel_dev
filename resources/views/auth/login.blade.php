@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tmpl::login')
 
 @section('content')
 <div class="container">

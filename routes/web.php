@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 //Auth::routes(); //lehet hogy kell-------------------------------------------
 
@@ -22,13 +20,14 @@ Route::get('/home', 'HomeController@index');
 /*Route::get('admin', function () {
     return view('test');
 });*/
-
+Route::get('authfriend/{countryid}', 'FriendController@autstore');
+Route::get('listfriend/{countryid}', 'FriendController@listfriend');
 Route::get('test', 'TestController@index');
 //Route::get('proba', 'proba\proba@valami');
 
 
 Route::get('/', function () {
-    return view('base.welcome');
+    return view('tmpl::app');
 });
 
 Route::auth();

@@ -47,6 +47,11 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+'laradrop' => [
+            'driver' => 'local',
+            'root' => public_path('uploads'), // will put files in 'public/upload' directory
+        ],
+
 
         'public' => [
             'driver' => 'local',

@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('tmpl::dashboard')
  
 @section('content')
 	<div class="row">
 	    <div class="col-lg-12 margin-tb">
 	        <div class="pull-left">
-	            <h2>Edit New Item</h2>
+	            <h2>Create New Item</h2>
 	        </div>
 	        <div class="pull-right">
 	            <a class="btn btn-primary" href="{{ route('itemCRUD2.index') }}"> Back</a>
@@ -21,7 +21,7 @@
 			</ul>
 		</div>
 	@endif
-	{!! Form::model($item, ['method' => 'PATCH','route' => ['itemCRUD2.update', $item->id]]) !!}
+	{!! Form::open(array('route' => 'itemCRUD2.store','method'=>'POST')) !!}
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">

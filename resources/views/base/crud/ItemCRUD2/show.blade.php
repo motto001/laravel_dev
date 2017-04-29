@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('tmpl::dashboard')
  
 @section('content')
 	<div class="row">

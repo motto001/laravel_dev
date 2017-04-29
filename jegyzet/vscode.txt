@@ -1,0 +1,7 @@
+github: nem kell feltenni semmilyen kiegészítőt,  uj repot kell csinálni a githubon,(üreset) és --!!!klónozni!!!-- a  A VS indulásakor. Bekéri a linket egy ablakban,
+éa a jelszót,és ki kell tallózni hogy hol legyen a helyi könytár.
+A VS-ben készült könyvtárat nem sikerült összekapcsolni a githubbal semmilyen furmánnyal. Ha már elkészült fileokat akarunk feltenni a gitre akkor is érdemesígy csinálni és hakész a kapcsolat utána belemásolni a helyi könyvtárba.
+
+Lehet hogy a git-et előbb fel kell telepíteni https://git-scm.com/download/win
+ 
+vs code hogy a blade.php htmlként nyissa meg:"files.associations": { "*.blade.php": "html" }

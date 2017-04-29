@@ -16,7 +16,12 @@ return [
     'paths' => [
         realpath(base_path('resources/views')),
     ],
-
+  'tmpl' => [
+        realpath(base_path('resources/views/base')),
+    ],
+     'crud' => [
+        realpath(base_path('resources/views/base/crud')),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Compiled View Path
