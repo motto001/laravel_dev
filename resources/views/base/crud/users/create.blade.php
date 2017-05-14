@@ -22,10 +22,9 @@
 		</div>
 	@endif
 	{!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
-<!-- laradrop --------------------------------- -->
-
-
-  <div class="input-group form-group">
+<!--media----------------------- -->
+@include('require.momedia.mediaInit')
+<div class="input-group form-group">
       <span class="input-group-addon" >
         File ID: <strong class="file-id">*</strong>
       </span>
@@ -34,36 +33,7 @@
         <button class="btn btn-default modal-btn" type="button" data-toggle="modal" data-target="#myModal">Select File</button>
       </span>
   </div>
-
-  <div class="input-group form-group">
-      <span class="input-group-addon" >
-        File ID: <strong class="file-id">*</strong>
-      </span>
-      <input type="text" class="form-control file-src" id="file2"  placeholder="File Thumb Source">
-      <span class="input-group-btn">
-        <button class="btn btn-default modal-btn" type="button" data-toggle="modal" data-target="#myModal">Select File</button>
-      </span>
-  </div>
-
-  <div class="input-group form-group">
-      <span class="input-group-addon" >
-        File ID: <strong class="file-id">*</strong>
-      </span>
-      <input type="text" class="form-control file-src" id="file2"  placeholder="File Thumb Source">
-      <span class="input-group-btn">
-        <button class="btn btn-default modal-btn" type="button" data-toggle="modal" data-target="#myModal">Select File</button>
-      </span>
-  </div>
-
-
-
-
-
-<!-- resources/views/vendor/laradrop/mainContainer.blade.php -->                      
-
-<!-- resources/views/vendor/laradrop/previewContainer.blade.php -->                       
-
-
+<!--mediaend-------------------------- -->  
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
@@ -101,21 +71,5 @@
 	</div>
 	{!! Form::close() !!}
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="myModalLabel">My Media Manager</h4>
-      </div>
-      <div class="modal-body">
-       
-            <div class="laradrop" laradrop-csrf-token="{{ csrf_token() }}" ></div>    </div>
-            <div class="clearfix"></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 @endsection

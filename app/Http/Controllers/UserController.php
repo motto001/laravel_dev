@@ -31,7 +31,8 @@ class UserController extends Controller
     public function create()
     {
         $roles =Role::pluck('display_name','id');
-        return view('crud::users.create',compact('roles'));
+       // return view('crud::users.create',compact('roles'));
+        return  \motto001\mo\Change::moview(view('crud::users.create',compact('roles')));
     }
 
     /**

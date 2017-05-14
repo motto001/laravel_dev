@@ -1,9 +1,9 @@
 
 //kell hozzá: <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLd72NuWtHwKed5hzXNMXULr5yqfTx06A&callback=initMap" async defer></script>
-class momap extends google.maps.Map {
+class Momap  {
 
 
-constructor(param) {
+constructor() {
  this.Id = 'map_'; //ezzel kell kezdődnie a használt diveknek mezőknek(canvas,info,contrycode stb)
  this.map = null;
  this.resdata = 'cim'; // lehetmég:latlong,full
@@ -12,50 +12,81 @@ constructor(param) {
     scrollwheel: true,
     zoom: 5
   }
-
-  }
-  initMap() {
+  this.initMap() ;
+  //this.getGeoData('dghsdfjhfds');
+}
+static callOutFunc(data) {
+     if (typeof (MOmapClick) == "function")
+        { MOmapClick(data); }
+        else if(typeof (baseMOmapClick) == "function")
+        { Momap.baseMOmapClick(data); }
+}
+initMap() {
     // Create a map object and specify the DOM element for display.
     this.map = new google.maps.Map(document.getElementById(this.Id + 'canvas'), this.mapParam);
     this.map.addListener('click', function (e) {
-      clickedLatlong = ("" + e.latLng).replace('(', ''); //átalakítja stringé különben nem működik a replace
+     var clickedLatlong = ("" + e.latLng).replace('(', ''); //átalakítja stringé különben nem működik a replace
       clickedLatlong = clickedLatlong.replace(')', '');
       if (this.resdata == 'latlong') {
-        if (typeof (MOmapClick) == "function")
-        { MOmapClick(clickedLatlong); }
-        elseif(typeof (baseMOmapClick) == "function")
-        { baseMOmapClick(clickedLatlong); }
+
+         Momap.callOutFunc(clickedLatlong);
       }
       else {
-        this.getClickedData(lickedLatlong);
+         Momap.getGeoData(clickedLatlong);
       }
 
     });
   }
+static getGeoDataHandler(data) { 
+var res={
+'address': data.results[0].formatted_address,
+'lat': data.results[0].geometry.location.lat,
+'lng': data.results[0].geometry.location.lng,
+};
+
+$.each(data.results[0].address_components, function(index, value) {
+ // data.results[0].address_components.each(function(index, value) {
+ 
+    if(value.types[0]=='country'){
+      res.country=value.long_name;
+      res.countryCode=value.short_name;}
+    else if(value.types[0]=='postal_code'){res.postal_code=value.long_name;}
+    else if(value.types[0]=='administrative_area_level_1'){
+      res.level1=value.long_name;
+      res.level1Code=value.short_name;
+    }
+    else if(value.types[0]=='administrative_area_level_2'){
+      res.level2=value.long_name;
+      res.level2Code=value.short_name;
+    }
+    else if(value.types[0]=='administrative_area_level_3'){
+      res.level3=value.long_name;
+      res.level3Code=value.short_name;
+    }
+    else if(value.types[0]=='locality'){res.locality=value.long_name;}
+    else {
+      res.type=value.type;
+      res.name=value.long_name;
+    }
+
+});
 
 
-  getClickedData(latLng) {
+return res;
+}
+ static getGeoData(latLng) {
     $.ajax({
       url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latLng + "&sensor=true",
       dataType: 'json'
     }).done(function (data) {
       if (this.resdata == 'full') { datAR = data; }
       else {
-        var datAR = {
-          'countryCode': data.results[0].address_components[0].long_name,
-        };
+        var datAR = Momap.getGeoDataHandler(data);
       }
+Momap.callOutFunc(datAR );
+  });
 
-     $('#mo-info').append(data.results[0].address_components[0].long_name + data.results[0].formatted_address);
-      //$('#mo-info').append("jsdfklajlfj");
-      if (typeof (MOmapClick) == "function")
-      { MOmapClick(datAR); }
-      elseif(typeof (baseMOmapClick) == "function")
-      { baseMOmapClick(datAR); }
-
-    });
-
-  }
+ }
 
   baseMOmapClick(datAR) {
     

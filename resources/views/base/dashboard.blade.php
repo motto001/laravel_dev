@@ -42,8 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" ></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="/vendor/jasekz/laradrop/js/enyo.dropzone.js"></script>
-<script src="/vendor/jasekz/laradrop/js/laradrop.js"></script> 
+<!--#head-->
 
 @stack('js_file')
   <script>
@@ -57,23 +56,8 @@ jQuery(document).ready(function(){
     	jQuery('.modal-btn').click(function(){
     		currentModalBtn = jQuery(this);
     	});
-    		
-        jQuery('.laradrop').laradrop({
-            onInsertCallback: function (obj){
-              /** Populate our id and src **/
-              currentModalBtn.closest('.input-group').find('.file-id').text(obj.id);
-              currentModalBtn.closest('.input-group').find('input.file-src').val(obj.src);
-              
-              $('#myModal').modal('toggle');
-            },
-            onErrorCallback: function(jqXHR,textStatus,errorThrown){
-                // if you need an error status indicator, implement here
-                alert('An error occured: '+ errorThrown);
-            },
-            onSuccessCallback: function(serverData){
-                // if you need a success status indicator, implement here
-            }
-        }); 
+    	//#js_docready**
+       
     });
      
   </script>

@@ -1,7 +1,7 @@
 jQuery.fn.laradrop = function(options) {	
     Dropzone.autoDiscover = false;
     options = options == undefined ? {} : options;
-
+  
     var laradropObj = jQuery(this),
 		fileHandler = options.fileHandler ? options.fileHandler : ( laradropObj.attr('laradrop-upload-handler') ? laradropObj.attr('laradrop-upload-handler') : '/laradrop'),
     	fileDeleteHandler = options.fileDeleteHandler ? options.fileDeleteHandler : ( laradropObj.attr('laradrop-file-delete-handler') ? laradropObj.attr('laradrop-file-delete-handler') : '/laradrop/0'),
@@ -51,8 +51,10 @@ jQuery.fn.laradrop = function(options) {
 		   // 'add folder' 
 		   laradropContainer.find('.btn-add-folder').click(function(e){
 			    e.preventDefault();
+				//currentFolderId=jQuery('#dirname').val();
+				//currentFolderId='6u7466u76';
 				jQuery.ajax({
-				    url: fileCreateHandler+'?pid='+currentFolderId,
+				    url: fileCreateHandler+'?pid='+currentFolderId+'&filename='+jQuery('#dirname').val(),
 				    type: 'POST',
 				    dataType: 'json',
 			        headers: { 'X-CSRF-TOKEN': csrfToken },
@@ -136,8 +138,8 @@ jQuery.fn.laradrop = function(options) {
 	    	handleError(jqXHR,textStatus,errorThrown);
 	    }
 	});
-
-	function displayMedia(res){
+function displayMedia(res){
+ var selectedAR={};
 			var out='',
 				record='',
 				re;
@@ -166,20 +168,42 @@ jQuery.fn.laradrop = function(options) {
 					id = item.attr('file-id');
 								
 				if(onInsertCallback) {
-					eval(onInsertCallback({id:id, src:thumbSrc}));
+					eval(onInsertCallback({id:{'id':id, 'src':thumbSrc}}));
 				}
-			});	  
-		    
-			laradropContainer.find('.laradrop-file-delete').click(function(e) {
-		    	e.preventDefault();
-		    	var fileId = jQuery(this).closest('.laradrop-thumbnail').attr('file-id');
-		    	
-		    	fileDeleteHandler = fileDeleteHandler.replace(fileDeleteHandler.substr(fileDeleteHandler.lastIndexOf('/')), '/'+fileId);
-		    	
-		    	if(!confirm(actionConfirmationText)) {
-		    		return false;
-		    	}
-		    	
+			});	
+
+
+ 			laradropContainer.find('.laradrop-multi-file-insert').click(function(){
+			
+					if(onInsertCallback) {
+					eval(onInsertCallback(selectedAR));
+					//alert('multiinsert');
+				}
+				
+			});	
+
+	laradropContainer.find('.laradrop-multi-file-select').click(function(){
+
+			var item = jQuery(this).closest('.laradrop-thumbnail'),
+					thumbSrc = item.find('img').attr('src'),
+					id = item.attr('file-id');
+			  if(selectedAR[id]==undefined){
+				  jQuery(this).html(' <span style="color:red" class="glyphicon glyphicon-ok" ></span>');
+				
+						selectedAR[id]={'id':id, 'src':thumbSrc};
+			  }
+			  else
+			  {
+				  
+					delete selectedAR[id];
+					jQuery(this).html(' <span  class="glyphicon glyphicon-unchecked" ></span>');
+			  }
+								
+			});	
+//törlés-------------------------------------------------
+   function imgdelete(fileId){
+
+				fileDeleteHandler = fileDeleteHandler.replace(fileDeleteHandler.substr(fileDeleteHandler.lastIndexOf('/')), '/'+fileId);	    	
 				jQuery.ajax({
 				    url: fileDeleteHandler,
 				    type: 'DELETE',
@@ -194,7 +218,37 @@ jQuery.fn.laradrop = function(options) {
 				    	handleError(jqXHR,textStatus,errorThrown);
 				    }
 				});
+
+			}
+laradropContainer.find('.laradrop-file-delete').click(function(e) {
+		    	e.preventDefault();
+					if(!confirm(actionConfirmationText)) {
+		    		return false;
+		    	}
+		    	var fileId = jQuery(this).closest('.laradrop-thumbnail').attr('file-id');
+		    	
+		    	imgdelete(fileId);
 		    });
+
+laradropContainer.find('.laradrop-multi-file-delete').click(function(e){
+				e.preventDefault();
+					if(!confirm(actionConfirmationText)) {
+		    		return false;
+		    	}
+$.each(selectedAR, function(index, value) {
+     //alert(value.id);
+	 imgdelete(value.id);
+});
+
+
+		});
+
+	
+
+		 
+
+
+		
 		    
 			laradropContainer.find('.laradrop-folder img').click(function(){	
 				var folder = jQuery(this).closest('.laradrop-folder');

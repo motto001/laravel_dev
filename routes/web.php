@@ -40,55 +40,12 @@ Route::get('test', 'TestController@index');
 Route::get('/', function () 
 {
 	
-	$view = View::make('tmpl::app', ['name' => 'Rishabh']);
+	//$view = View::make('tmpl::app', ['name' => 'Rishabh']);
 	
-	$contents = $view->render();
+	//$contents = $view->render();
 	
-	$outputAR=[];
-	
-	$marvan=[];
-	
-	$changeAR=[];
-	
-	preg_match_all("/<!--push\|\|\|(.*?)-->/s", $contents, $outputAR);
-	
-	if(isset($outputAR[1]))
-	{
-	
-		foreach($outputAR[1] as $outsor)
-		{
-			
-			$sorT=explode('|||',$outsor);
-			
-			if(!isset($marvan[$sorT[0]][$sorT[1]]))
-			{
-				
-				
-				if(isset($changeAR[$sorT[0]]))
-				{
-					$changeAR[$sorT[0]].=$sorT[2];
-				}
-				
-				else
-				{
-					
-					$changeAR[$sorT[0]]=$sorT[2];					
-				}				
-				$marvan[$sorT[0]][$sorT[1]]='van';				
-			}
-	
-		}
-		
-		foreach($changeAR as $key=>$val)
-		{
-			
-			$contents = str_ireplace('<!--#'.$key.'-->',$val,$contents);
-			
-		}
-		
-		
-	}
-	echo $contents;
+return  motto001\mo\Change::moview(View::make('tmpl::app'));
+
 	// 	return view('tmpl::app');
 }
 );
@@ -110,7 +67,7 @@ Route::group(['prefix' => 'profil','middleware' => 'App\Http\Middleware\userjog'
 	
 	Route::resource('/','proba\ProbaController' );
 	
-	Route::resource('frien','proba\FriendController' );
+	Route::resource('friend','proba\FriendController' );
 	
 }
 

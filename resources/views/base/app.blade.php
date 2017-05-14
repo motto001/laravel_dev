@@ -39,7 +39,7 @@
 
  <script>
   $(document).ready(function(){
-
+//#js_docready**
 });
 
 
@@ -50,26 +50,21 @@
 </head>
 <body class="skin-blue">
 
-    <!-- Header -->
+    <!--#Header-->
  @include('tmpl::part.appheader')
   @yield('content')
    
 
 <div class="col-md-8 col-md-offset-2">
 	<h1>Üdv! kattints az országra ahol vezetőt keresel!</h1>
-</div>
 
- @include('require.momap.momap')   
-
-
-<div >
-	<div id="map_canvas" style="height:400px; " class="col-md-8 col-md-offset-2"></div>
+     @include('require.momap.momapformInput')   
 </div>
 
 
-<div id="mo-info" class="col-md-8 col-md-offset-2" style=" border-style: solid;
-    border-width: 1px;min-height:500px;">
-</div> 
+
+
+
 
    <!-- jQuery 2.1.3 -->
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jQuery-2.2.3.min.js") }}"></script>

@@ -31,3 +31,17 @@ meghívás bladeben:@extends('tmpl::layouts.app');
 
 Call to undefined method Illuminate\Database\Query\Builder::list();
 5.2 felett a list() helyett pluck() van;
+
+-------------------------------------
+ha az auth::id() null-al tér vissza:
+
+app/Http/Kernel.php:
+
+    protected $middleware = [
+        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \App\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \App\Http\Middleware\VerifyCsrfToken::class
+    ];
