@@ -22,18 +22,35 @@
 		</div>
 	@endif
 	{!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
-<!--media----------------------- -->
-@include('require.momedia.mediaInit')
-<div class="input-group form-group">
-      <span class="input-group-addon" >
-        File ID: <strong class="file-id">*</strong>
-      </span>
-      <input type="text" class="form-control file-src" id="file1"  placeholder="File Thumb Source">
-      <span class="input-group-btn">
-        <button class="btn btn-default modal-btn" type="button" data-toggle="modal" data-target="#myModal">Select File</button>
-      </span>
-  </div>
-<!--mediaend-------------------------- -->  
+<!--media ------------------------->
+@include('require.momedia.lfmMediaInit')
+
+<!-- mediaend ---------------------------->  
+<!-- Ckeditor -->
+
+<textarea id="my-editor" name="content" class="form-control">{!! old('content', 'test editor content') !!}</textarea>
+
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
+<script>
+$('textarea.my-editor').ckeditor(options);
+</script>  
+ <script src="/vendor/laravel-filemanager/js/lfm.js"></script>
+
+<div class="input-group">
+   <span class="input-group-btn">
+     <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+       <i class="fa fa-picture-o"></i> Choose
+     </a>
+   </span>
+   <input id="thumbnail" class="form-control" type="text" name="filepath">
+ </div>
+ <img id="holder" style="margin-top:15px;max-height:100px;">
+ <script>
+$('#lfm').filemanager('image');
+$('#lfm').filemanager('file');
+
+</script>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
